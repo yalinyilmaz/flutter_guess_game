@@ -75,4 +75,17 @@ class CustomColor {
     shade800: Color(0xFFF9A825),
     shade900: Color(0xFFF57F17),
   );
+
+  static CustomColor appBlueColor = const CustomColor(
+    shade50: Color(0xFFE6E7F5),
+    shade100: Color(0xFFC1C4E5),
+    shade200: Color(0xFF979ED4),
+    shade300: Color(0xFF6D78C3),
+    shade400: Color(0xFF4E5BB6),
+    shade500: Color.fromARGB(255, 8, 24, 192),
+    shade600: Color(0xFF071BC0),
+    shade700: Color(0xFF0618A8),
+    shade800: Color(0xFF051590),
+    shade900: Color(0xFF041178),
+  );
 }

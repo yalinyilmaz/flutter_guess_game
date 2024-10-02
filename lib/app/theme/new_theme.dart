@@ -14,6 +14,8 @@ extension ThemeExtension on BuildContext {
 
   CustomColor get whiteColor => CustomColor.appWhiteColor;
 
+  CustomColor get blueColor => CustomColor.appBlueColor;
+
   Color get otherStroke => const Color(0xFFCED4DA);
 }
 

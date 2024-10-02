@@ -4,7 +4,8 @@ import 'package:flutter_guess_game/app/navigation/router.dart';
 import 'package:flutter_guess_game/app/theme/new_theme.dart';
 
 enum MessageDialogPurpose {
-  warning(AssetImage('assets/icons/error.png')),
+  warning(AssetImage('assets/icons/warning.png')),
+  error(AssetImage('assets/icons/error.png')),
   success(AssetImage('assets/icons/success.png'));
 
   final AssetImage image;
