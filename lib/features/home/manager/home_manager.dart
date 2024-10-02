@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_guess_game/features/home/view/components/game_body.dart';
+import 'package:flutter_guess_game/features/home/view/components/scoreboard_body.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supercharged/supercharged.dart';
 
@@ -12,7 +13,7 @@ enum HomeFragments {
 
 final Map<HomeFragments, Widget> selectedHomeFragMap = {
   HomeFragments.gamePlay: const GameBody(),
-  HomeFragments.scoreTable: const SizedBox(),
+  HomeFragments.scoreTable: const ScoreboardBody(),
 };
 
 final selectedHomeFragments =
@@ -28,6 +29,10 @@ final winnerNumberProvider = StateProvider<int>((ref) {
 
 final triesProvider = StateProvider<int>((ref) {
   return 0;
+});
+
+final historyListProvider = StateProvider<List<int>>((ref) {
+  return [];
 });
 
 final homeManagerProvider = Provider<HomeManager>((ref) {
