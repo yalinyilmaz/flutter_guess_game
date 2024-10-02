@@ -8,6 +8,8 @@ extension ThemeExtension on BuildContext {
 
   CustomColor get greenColor => CustomColor.appGreenColor;
 
+  CustomColor get yellowColor => CustomColor.appYellowColor;
+
   CustomColor get darkColor => CustomColor.darkColor;
 
   CustomColor get whiteColor => CustomColor.appWhiteColor;

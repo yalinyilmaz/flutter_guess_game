@@ -62,4 +62,17 @@ class CustomColor {
     shade800: Color(0xFF1D7C34),
     shade900: Color(0xFF125F25),
   );
+
+  static CustomColor appYellowColor = const CustomColor(
+    shade50: Color(0xFFFFFDE7),
+    shade100: Color(0xFFFFF9C4),
+    shade200: Color(0xFFFFF59D),
+    shade300: Color(0xFFFFF176),
+    shade400: Color(0xFFFFEE58),
+    shade500: Color(0xFFFFEB3B),
+    shade600: Color(0xFFFDD835),
+    shade700: Color(0xFFFBC02D),
+    shade800: Color(0xFFF9A825),
+    shade900: Color(0xFFF57F17),
+  );
 }

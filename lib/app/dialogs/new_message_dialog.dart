@@ -4,7 +4,7 @@ import 'package:flutter_guess_game/app/navigation/router.dart';
 import 'package:flutter_guess_game/app/theme/new_theme.dart';
 
 enum MessageDialogPurpose {
-  warning(AssetImage('assets/icons/info.png')),
+  warning(AssetImage('assets/icons/error.png')),
   success(AssetImage('assets/icons/success.png'));
 
   final AssetImage image;
@@ -145,57 +145,67 @@ class MessageDialog {
       elevation: 0,
       contentPadding: EdgeInsets.zero,
       insetPadding: padding,
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                color: globalCtx.whiteColor.shade200,
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(24))),
-            child: Container(
-              height: MediaQuery.sizeOf(globalCtx).height * .2,
+      content: Container(
+        decoration: textColor != null
+            ? BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(color: textColor, width: 2))
+            : null,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: purpose.image,
-                  scale: 2.3,
+                  color: globalCtx.whiteColor.shade200,
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(24))),
+              child: Container(
+                height: MediaQuery.sizeOf(globalCtx).height * .2,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: purpose.image,
+                    scale: .5,
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-                color: globalCtx.whiteColor.shade50,
-                borderRadius:
-                    const BorderRadius.vertical(bottom: Radius.circular(24))),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  caption != null
-                      ? Text(
-                          caption,
-                          style: globalCtx.textTheme.title1Emphasized.copyWith(
-                              color: textColor ?? globalCtx.darkColor.shade400),
-                        )
-                      : const SizedBox.shrink(),
-                  const SizedBox(height: 25),
-                  content != null
-                      ? Text(
-                          content,
-                          style: globalCtx.textTheme.calloutRegular.copyWith(
-                              color: textColor ?? globalCtx.darkColor.shade400),
-                          textAlign: TextAlign.center,
-                        )
-                      : const SizedBox.shrink(),
-                  const SizedBox(height: 25),
-                  footer
-                ],
+            Container(
+              decoration: BoxDecoration(
+                  color: globalCtx.whiteColor.shade50,
+                  borderRadius:
+                      const BorderRadius.vertical(bottom: Radius.circular(24))),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    caption != null
+                        ? Text(
+                            caption,
+                            style: globalCtx.textTheme.title1Emphasized
+                                .copyWith(
+                                    color: textColor ??
+                                        globalCtx.darkColor.shade400),
+                          )
+                        : const SizedBox.shrink(),
+                    const SizedBox(height: 25),
+                    content != null
+                        ? Text(
+                            content,
+                            style: globalCtx.textTheme.calloutRegular.copyWith(
+                                color:
+                                    textColor ?? globalCtx.darkColor.shade400),
+                            textAlign: TextAlign.center,
+                          )
+                        : const SizedBox.shrink(),
+                    const SizedBox(height: 25),
+                    footer
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
