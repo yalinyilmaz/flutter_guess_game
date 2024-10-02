@@ -1,72 +1,90 @@
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_guess_game/app/navigation/router.dart';
+import 'package:flutter_guess_game/app/store/app_store.dart';
+import 'package:flutter_guess_game/app/theme/new_theme.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
+import 'package:loading_overlay/loading_overlay.dart';
 
-void main() {
-  runApp(const MyApp());
+
+final ProviderContainer container = ProviderContainer();
+
+void main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    // log('Initializing Firebase...');
+    // await Firebase.initializeApp(
+    //   options: DefaultFirebaseOptions.currentPlatform,
+    // );
+    // log('Firebase initialized successfully');
+    runApp(UncontrolledProviderScope(
+        container: container,
+        child: const MyApp()));
+  
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
+  State<MyApp> createState() => _MyAppState();
+}
 
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    BackButtonInterceptor.add(myInterceptor);
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-
-  final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(context)
+            .copyWith(textScaler: const TextScaler.linear(1)),
+        child: Consumer(
+          builder: (context, ref, _) => LoadingOverlay(
+            isLoading: ref.watch(isAppLoadingProvider),
+            child: child!,
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), 
+      routerConfig: router,
+      title: 'E-Store',
+      theme: ThemeData(
+        useMaterial3: false,
+        textSelectionTheme: TextSelectionThemeData(
+          selectionHandleColor: context.darkColor.shade500,
+          selectionColor: context.darkColor.shade500,
+          cursorColor: context.darkColor.shade500,
+        ),
+      ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('tr', 'TR'),
+        Locale('en', 'EN'),
+      ],
     );
   }
 }
+
+
