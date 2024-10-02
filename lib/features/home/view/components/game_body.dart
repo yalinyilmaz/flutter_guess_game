@@ -1,11 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_guess_game/app/components/custom_buttons/new_custom_elevated_button.dart';
+import 'package:flutter_guess_game/app/dialogs/new_message_dialog.dart';
 import 'package:flutter_guess_game/app/navigation/router.dart';
 import 'package:flutter_guess_game/app/theme/new_theme.dart';
 import 'package:flutter_guess_game/core/button_animation/new_animated_fade_button.dart';
 import 'package:flutter_guess_game/features/home/manager/home_manager.dart';
 import 'package:flutter_guess_game/features/home/view/components/number_input_field.dart';
 import 'package:flutter_guess_game/main.dart';
+import 'package:go_router/go_router.dart';
+import 'package:supercharged/supercharged.dart';
 
 class GameBody extends StatelessWidget {
   const GameBody({
@@ -72,18 +77,10 @@ class GameBody extends StatelessWidget {
                           buttonSize: ButtonSize.large,
                           text: "GO",
                           onButtonPressed: (p0) {
-                            // MessageDialog.twoButtons(
-                            //   textColor: context.blueColor.shade600,
-                            //   caption: "Correct!",
-                            //   content:
-                            //       "You guessed correctly the number 54 in 12 tries ",
-                            //   backButtonText: "Play Again",
-                            //   forwardButtonText: "See Score Table",
-                            //   onBackButtonPressed: () {
-                            //     globalCtx.pop();
-                            //   },
-                            //   purpose: MessageDialogPurpose.warning,
-                            // );
+                            _checkEnteredNumber(context);
+                            log(container
+                                .read(winnerNumberProvider)
+                                .toString());
                           },
                         ),
                       ),
@@ -96,5 +93,42 @@ class GameBody extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _checkEnteredNumber(BuildContext context) {
+    container.read(triesProvider.notifier).state += 1;
+
+    final isCorrect = container.read(numberControllerProvider).text.toInt() ==
+        container.read(winnerNumberProvider);
+    final isLower = container.read(numberControllerProvider).text.toInt()! <
+        container.read(winnerNumberProvider);
+    if (isCorrect) {
+      container.invalidate(winnerNumberProvider);
+      container.invalidate(triesProvider);
+      MessageDialog.twoButtons(
+        textColor: context.greenColor.shade600,
+        caption: "Correct!",
+        content:
+            "You guessed correctly the number ${container.read(winnerNumberProvider)} in ${container.read(triesProvider)} tries ",
+        backButtonText: "Play Again",
+        forwardButtonText: "See Score Table",
+        onBackButtonPressed: () {
+          globalCtx.pop();
+        },
+        purpose: MessageDialogPurpose.success,
+      );
+    } else {
+      MessageDialog.singleButton(
+        textColor: context.blueColor.shade600,
+        caption: "Try Again!",
+        content:
+            "You are very close, try a ${isLower ? "higher " : "lower "}number!",
+        buttonText: "Try Again",
+        onButtonPressed: () {
+          globalCtx.pop();
+        },
+        purpose: MessageDialogPurpose.warning,
+      );
+    }
   }
 }

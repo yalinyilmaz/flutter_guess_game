@@ -31,6 +31,7 @@ class _NumberInputFieldState extends ConsumerState<NumberInputField> {
 
   @override
   void dispose() {
+    focusNode.dispose();
     super.dispose();
   }
 

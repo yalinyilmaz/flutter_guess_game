@@ -1,6 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_guess_game/features/home/view/components/game_body.dart';
-import 'package:flutter_guess_game/features/home/view/splash_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supercharged/supercharged.dart';
 
@@ -17,12 +18,20 @@ final Map<HomeFragments, Widget> selectedHomeFragMap = {
 final selectedHomeFragments =
     ValueNotifier<HomeFragments>(HomeFragments.gamePlay);
 
-final homeManagerProvider = Provider<HomeManager>((ref) {
-  return HomeManager(ref);
-});
-
 final numberControllerProvider = StateProvider<TextEditingController>((ref) {
   return TextEditingController(text: "50");
+});
+
+final winnerNumberProvider = StateProvider<int>((ref) {
+  return Random().nextInt(100) +1;
+});
+
+final triesProvider = StateProvider<int>((ref) {
+  return 0;
+});
+
+final homeManagerProvider = Provider<HomeManager>((ref) {
+  return HomeManager(ref);
 });
 
 class HomeManager {

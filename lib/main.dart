@@ -8,20 +8,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 
-
 final ProviderContainer container = ProviderContainer();
 
 void main() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    // log('Initializing Firebase...');
-    // await Firebase.initializeApp(
-    //   options: DefaultFirebaseOptions.currentPlatform,
-    // );
-    // log('Firebase initialized successfully');
-    runApp(UncontrolledProviderScope(
-        container: container,
-        child: const MyApp()));
-  
+  WidgetsFlutterBinding.ensureInitialized();
+  // log('Initializing Firebase...');
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+  // log('Firebase initialized successfully');
+  runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
+
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 }
@@ -69,9 +66,9 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         useMaterial3: false,
         textSelectionTheme: TextSelectionThemeData(
-          selectionHandleColor: context.darkColor.shade500,
-          selectionColor: context.darkColor.shade500,
-          cursorColor: context.darkColor.shade500,
+          selectionHandleColor: context.whiteColor.shade500,
+          selectionColor: context.whiteColor.shade500,
+          cursorColor: context.whiteColor.shade500,
         ),
       ),
       localizationsDelegates: const [
@@ -86,5 +83,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-
