@@ -82,7 +82,8 @@ class GameBody extends StatelessWidget {
                             buttonSize: ButtonSize.large,
                             text: "GO",
                             onButtonPressed: (p0) {
-                              _checkEnteredNumber(context);
+                              container.read(homeManagerProvider).checkEnteredNumber();
+                              //_checkEnteredNumber(context);
                               log(container
                                   .read(winnerNumberProvider)
                                   .toString());
@@ -100,73 +101,5 @@ class GameBody extends StatelessWidget {
       ),
     );
   }
-
-  void _checkEnteredNumber(BuildContext context) {
-    container.read(triesProvider.notifier).state += 1;
-
-// son oyunun deneme listesini set et
-    final newGuess = [container.read(numberControllerProvider).text];
-    final currentHistory = container.read(eachGameTriesProvider);
-
-    container.read(eachGameTriesProvider.notifier).state =
-        newGuess + currentHistory;
-
-    final isCorrect = container.read(numberControllerProvider).text.toInt() ==
-        container.read(winnerNumberProvider);
-    final isLower = container.read(numberControllerProvider).text.toInt()! <
-        container.read(winnerNumberProvider);
-
-    if (isCorrect) {
-// en iyi 5 oyunun deneme listesini set et
-      final pastGamesTries = container.read(allTimeScoresListProvider);
-      container.read(allTimeScoresListProvider.notifier).state =
-          pastGamesTries + [container.read(eachGameTriesProvider)];
-
-      if (container.read(allTimeScoresListProvider).length > 5) {
-        final allTimeScores = container.read(allTimeScoresListProvider);
-
-        final sortedAllTimeScores = List<List<String>>.from(allTimeScores)
-          ..sort((a, b) => a.length.compareTo(b.length));
-
-        container.read(allTimeScoresListProvider.notifier).state =
-            sortedAllTimeScores.removeLast();
-      }
-
-      LocalDBService.instance
-          .setTries(container.read(allTimeScoresListProvider));
-
-      MessageDialog.twoButtons(
-        textColor: context.greenColor.shade600,
-        caption: "Correct!",
-        content:
-            "You guessed correctly the number ${container.read(winnerNumberProvider)} in ${container.read(triesProvider)} tries ",
-        backButtonText: "Play Again",
-        onBackButtonPressed: () {
-          container.invalidate(eachGameTriesProvider);
-          globalCtx.pop();
-        },
-        forwardButtonText: "See Score Table",
-        onForwardButtonPressed: () {
-          container.invalidate(eachGameTriesProvider);
-          globalCtx.pop();
-          selectedHomeFragments.value = HomeFragments.scoreTable;
-        },
-        purpose: MessageDialogPurpose.success,
-      );
-      container.invalidate(winnerNumberProvider);
-      container.invalidate(triesProvider);
-    } else {
-      MessageDialog.singleButton(
-        textColor: context.blueColor.shade600,
-        caption: "Try Again!",
-        content:
-            "You are very close, try a ${isLower ? "higher " : "lower "}number!",
-        buttonText: "Try Again",
-        onButtonPressed: () {
-          globalCtx.pop();
-        },
-        purpose: MessageDialogPurpose.warning,
-      );
-    }
-  }
 }
+

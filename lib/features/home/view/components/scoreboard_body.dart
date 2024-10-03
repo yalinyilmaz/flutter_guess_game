@@ -19,7 +19,7 @@ class _ScoreboardBodyState extends State<ScoreboardBody> {
   @override
   void initState() {
     super.initState();
-    log(container.read(allTimeScoresListProvider).toString());
+    log("tümzamanlar " + container.read(allTimeScoresListProvider).toString());
     sortedScores = sortScoresByLength();
   }
 

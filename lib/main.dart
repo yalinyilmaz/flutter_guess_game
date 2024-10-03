@@ -18,7 +18,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   log('Initializing hive...');
   await Hive.initFlutter();
-
   await Hive.openBox<List<dynamic>>("Scores");
   log('hive initialized successfully');
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
