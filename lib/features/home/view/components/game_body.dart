@@ -118,13 +118,23 @@ class GameBody extends StatelessWidget {
 
     if (isCorrect) {
 // en iyi 5 oyunun deneme listesini set et
-      final best5GamesTries = container.read(allTimeScoresListProvider);
+      final pastGamesTries = container.read(allTimeScoresListProvider);
       container.read(allTimeScoresListProvider.notifier).state =
-          best5GamesTries + [container.read(eachGameTriesProvider)];
+          pastGamesTries + [container.read(eachGameTriesProvider)];
 
-      LocalDBService.instance.setTries(container.read(allTimeScoresListProvider));
+      if (container.read(allTimeScoresListProvider).length > 5) {
+        final allTimeScores = container.read(allTimeScoresListProvider);
 
-      container.invalidate(winnerNumberProvider);
+        final sortedAllTimeScores = List<List<String>>.from(allTimeScores)
+          ..sort((a, b) => a.length.compareTo(b.length));
+
+        container.read(allTimeScoresListProvider.notifier).state =
+            sortedAllTimeScores.removeLast();
+      }
+
+      LocalDBService.instance
+          .setTries(container.read(allTimeScoresListProvider));
+
       MessageDialog.twoButtons(
         textColor: context.greenColor.shade600,
         caption: "Correct!",
@@ -143,6 +153,7 @@ class GameBody extends StatelessWidget {
         },
         purpose: MessageDialogPurpose.success,
       );
+      container.invalidate(winnerNumberProvider);
       container.invalidate(triesProvider);
     } else {
       MessageDialog.singleButton(

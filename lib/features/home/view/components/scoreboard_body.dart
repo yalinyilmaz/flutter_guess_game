@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_guess_game/app/navigation/router.dart';
 import 'package:flutter_guess_game/app/theme/new_theme.dart';
@@ -17,6 +19,7 @@ class _ScoreboardBodyState extends State<ScoreboardBody> {
   @override
   void initState() {
     super.initState();
+    log(container.read(allTimeScoresListProvider).toString());
     sortedScores = sortScoresByLength();
   }
 
@@ -47,20 +50,15 @@ class _ScoreboardBodyState extends State<ScoreboardBody> {
                 isHeader: true,
               ),
               _buildTableRow(
-                  cells: ['1st', _getScoreText(0)],
-                  tries: _getTries(0)),
+                  cells: ['1st', _getScoreText(0)], tries: _getTries(0)),
               _buildTableRow(
-                  cells: ['2nd', _getScoreText(1)],
-                  tries: _getTries(1)),
+                  cells: ['2nd', _getScoreText(1)], tries: _getTries(1)),
               _buildTableRow(
-                  cells: ['3rd', _getScoreText(2)],
-                  tries: _getTries(2)),
+                  cells: ['3rd', _getScoreText(2)], tries: _getTries(2)),
               _buildTableRow(
-                  cells: ['4th', _getScoreText(3)],
-                  tries: _getTries(3)),
+                  cells: ['4th', _getScoreText(3)], tries: _getTries(3)),
               _buildTableRow(
-                  cells: ['5th', _getScoreText(4)],
-                  tries: _getTries(4)),
+                  cells: ['5th', _getScoreText(4)], tries: _getTries(4)),
             ],
           ),
         ),
@@ -69,7 +67,9 @@ class _ScoreboardBodyState extends State<ScoreboardBody> {
   }
 
   String _getScoreText(int index) {
-    return index < sortedScores.length ? "${sortedScores[index].length} Pts" : "-";
+    return index < sortedScores.length
+        ? "${sortedScores[index].length} Pts"
+        : "-";
   }
 
   List<String> _getTries(int index) {
