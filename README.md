@@ -3,14 +3,8 @@
 A new Flutter project.
 
 ## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ It is very simple guessing and finding the winner number game.
+ Your scores are being recorded in each game and the scoreboard shows how many guesses it takes to find the winner number.
+ Hive was used as Local DB.
+ Try and check out. 
+ Don't forget you can expand the history by expanding the scoreboard table. I put a limit of 5 to show the all-time scores.
