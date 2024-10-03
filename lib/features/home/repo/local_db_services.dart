@@ -8,15 +8,15 @@ class LocalDBService {
 
   static final LocalDBService instance = LocalDBService._();
 
-  void setTries(List<List<String>> allTries) async {
-    var box = await Hive.openBox<List<List<String>>>('Scores');
+  void setTries(List<dynamic> allTries) async {
+    var box = await Hive.openBox<List<dynamic>>('Scores');
     await box.clear();
     await box.put('AllScores', allTries);
   }
 
   void getTries() async {
-    var box = await Hive.openBox<List<List<String>>>('Scores');
+    var box = await Hive.openBox<List<dynamic>>('Scores');
     container.read(allTimeScoresListProvider.notifier).state =
-        box.get('AllScores', defaultValue: []) ?? [];
+        box.get('AllScores') ?? [];
   }
 }

@@ -19,7 +19,7 @@ void main() async {
   log('Initializing hive...');
   await Hive.initFlutter();
 
-  await Hive.openBox<List<List<String>>>("Scores");
+  await Hive.openBox<List<dynamic>>("Scores");
   log('hive initialized successfully');
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
 

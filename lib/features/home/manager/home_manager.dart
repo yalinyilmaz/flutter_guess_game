@@ -35,7 +35,7 @@ final eachGameTriesProvider = StateProvider<List<String>>((ref) {
   return [];
 });
 
-final allTimeScoresListProvider = StateProvider<List<List<String>>>((ref) {
+final allTimeScoresListProvider = StateProvider<List<dynamic>>((ref) {
   return [];
 });
 
