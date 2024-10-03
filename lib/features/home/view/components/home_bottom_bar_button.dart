@@ -3,6 +3,7 @@ import 'package:flutter_guess_game/app/navigation/router.dart';
 import 'package:flutter_guess_game/app/theme/new_theme.dart';
 import 'package:flutter_guess_game/core/button_animation/new_animated_fade_button.dart';
 
+// ignore: must_be_immutable
 class HomeBottomBarButton extends StatelessWidget {
   HomeBottomBarButton(
       {super.key,

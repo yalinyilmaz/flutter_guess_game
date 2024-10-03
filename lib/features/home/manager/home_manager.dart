@@ -7,7 +7,6 @@ import 'package:flutter_guess_game/app/theme/new_theme.dart';
 import 'package:flutter_guess_game/features/home/repo/local_db_services.dart';
 import 'package:flutter_guess_game/features/home/view/components/game_body.dart';
 import 'package:flutter_guess_game/features/home/view/components/scoreboard_body.dart';
-import 'package:flutter_guess_game/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supercharged/supercharged.dart';

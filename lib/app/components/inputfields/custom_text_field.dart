@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_guess_game/app/navigation/router.dart';
 import 'package:flutter_guess_game/app/theme/new_theme.dart';
 
 typedef ObsecureWidgetBuilderCb = Widget? Function(

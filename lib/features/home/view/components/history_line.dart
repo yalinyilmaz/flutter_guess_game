@@ -46,7 +46,7 @@ class HistoryLine extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "$prediction",
+                            prediction,
                             style: context.textTheme.bodyEmphasized
                                 .copyWith(color: globalCtx.whiteColor.shade100),
                           ),

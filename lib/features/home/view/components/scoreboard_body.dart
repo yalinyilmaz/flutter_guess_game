@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_guess_game/app/navigation/router.dart';
 import 'package:flutter_guess_game/app/theme/new_theme.dart';
@@ -19,7 +18,6 @@ class _ScoreboardBodyState extends State<ScoreboardBody> {
   @override
   void initState() {
     super.initState();
-    log("tümzamanlar " + container.read(allTimeScoresListProvider).toString());
     sortedScores = sortScoresByLength();
   }
 
@@ -34,6 +32,21 @@ class _ScoreboardBodyState extends State<ScoreboardBody> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Text(
+                  "Scoreboard",
+                  style: context.textTheme.title3Emphasized
+                      .copyWith(color: globalCtx.whiteColor.shade100),
+                ),
+              ),
+            ],
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Table(

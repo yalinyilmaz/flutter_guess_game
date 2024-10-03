@@ -1,18 +1,13 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_guess_game/app/components/custom_buttons/new_custom_elevated_button.dart';
-import 'package:flutter_guess_game/app/dialogs/new_message_dialog.dart';
 import 'package:flutter_guess_game/app/navigation/router.dart';
 import 'package:flutter_guess_game/app/theme/new_theme.dart';
 import 'package:flutter_guess_game/core/button_animation/new_animated_fade_button.dart';
 import 'package:flutter_guess_game/features/home/manager/home_manager.dart';
-import 'package:flutter_guess_game/features/home/repo/local_db_services.dart';
 import 'package:flutter_guess_game/features/home/view/components/history_line.dart';
 import 'package:flutter_guess_game/features/home/view/components/number_input_field.dart';
 import 'package:flutter_guess_game/main.dart';
-import 'package:go_router/go_router.dart';
-import 'package:supercharged/supercharged.dart';
 
 class GameBody extends StatelessWidget {
   const GameBody({
@@ -28,6 +23,19 @@ class GameBody extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          const SizedBox(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Text(
+                  "Find Winner Number Between 1-100",
+                  style: context.textTheme.headlineItalic
+                      .copyWith(color: globalCtx.whiteColor.shade100),
+                ),
+              ),
+            ],
+          ),
           const HistoryLine(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40.0),
@@ -82,8 +90,9 @@ class GameBody extends StatelessWidget {
                             buttonSize: ButtonSize.large,
                             text: "GO",
                             onButtonPressed: (p0) {
-                              container.read(homeManagerProvider).checkEnteredNumber();
-                              //_checkEnteredNumber(context);
+                              container
+                                  .read(homeManagerProvider)
+                                  .checkEnteredNumber();
                               log(container
                                   .read(winnerNumberProvider)
                                   .toString());
@@ -102,4 +111,3 @@ class GameBody extends StatelessWidget {
     );
   }
 }
-
