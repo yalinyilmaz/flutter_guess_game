@@ -7,6 +7,7 @@ import 'package:flutter_guess_game/app/navigation/router.dart';
 import 'package:flutter_guess_game/app/theme/new_theme.dart';
 import 'package:flutter_guess_game/core/button_animation/new_animated_fade_button.dart';
 import 'package:flutter_guess_game/features/home/manager/home_manager.dart';
+import 'package:flutter_guess_game/features/home/repo/local_db_services.dart';
 import 'package:flutter_guess_game/features/home/view/components/history_line.dart';
 import 'package:flutter_guess_game/features/home/view/components/number_input_field.dart';
 import 'package:flutter_guess_game/main.dart';
@@ -103,10 +104,11 @@ class GameBody extends StatelessWidget {
   void _checkEnteredNumber(BuildContext context) {
     container.read(triesProvider.notifier).state += 1;
 
-    final newGuess = [container.read(numberControllerProvider).text.toInt()!];
-    final currentHistory = container.read(historyListProvider);
+// son oyunun deneme listesini set et
+    final newGuess = [container.read(numberControllerProvider).text];
+    final currentHistory = container.read(eachGameTriesProvider);
 
-    container.read(historyListProvider.notifier).state =
+    container.read(eachGameTriesProvider.notifier).state =
         newGuess + currentHistory;
 
     final isCorrect = container.read(numberControllerProvider).text.toInt() ==
@@ -115,6 +117,13 @@ class GameBody extends StatelessWidget {
         container.read(winnerNumberProvider);
 
     if (isCorrect) {
+// en iyi 5 oyunun deneme listesini set et
+      final best5GamesTries = container.read(allTimeScoresListProvider);
+      container.read(allTimeScoresListProvider.notifier).state =
+          best5GamesTries + [container.read(eachGameTriesProvider)];
+
+      LocalDBService.instance.setTries(container.read(allTimeScoresListProvider));
+
       container.invalidate(winnerNumberProvider);
       MessageDialog.twoButtons(
         textColor: context.greenColor.shade600,
@@ -123,12 +132,12 @@ class GameBody extends StatelessWidget {
             "You guessed correctly the number ${container.read(winnerNumberProvider)} in ${container.read(triesProvider)} tries ",
         backButtonText: "Play Again",
         onBackButtonPressed: () {
-          container.invalidate(historyListProvider);
+          container.invalidate(eachGameTriesProvider);
           globalCtx.pop();
         },
         forwardButtonText: "See Score Table",
         onForwardButtonPressed: () {
-          container.invalidate(historyListProvider);
+          container.invalidate(eachGameTriesProvider);
           globalCtx.pop();
           selectedHomeFragments.value = HomeFragments.scoreTable;
         },

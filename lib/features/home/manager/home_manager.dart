@@ -24,14 +24,18 @@ final numberControllerProvider = StateProvider<TextEditingController>((ref) {
 });
 
 final winnerNumberProvider = StateProvider<int>((ref) {
-  return Random().nextInt(100) +1;
+  return Random().nextInt(100) + 1;
 });
 
 final triesProvider = StateProvider<int>((ref) {
   return 0;
 });
 
-final historyListProvider = StateProvider<List<int>>((ref) {
+final eachGameTriesProvider = StateProvider<List<String>>((ref) {
+  return [];
+});
+
+final allTimeScoresListProvider = StateProvider<List<List<String>>>((ref) {
   return [];
 });
 

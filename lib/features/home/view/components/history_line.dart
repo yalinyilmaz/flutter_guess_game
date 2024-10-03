@@ -24,7 +24,7 @@ class HistoryLine extends StatelessWidget {
         ),
         _buildDivider(),
         Consumer(builder: (context, ref, _) {
-          final predictions = ref.watch(historyListProvider);
+          final predictions = ref.watch(eachGameTriesProvider);
           return SizedBox(
             height: 50,
             child: Padding(

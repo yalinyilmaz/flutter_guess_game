@@ -1,22 +1,26 @@
+import 'dart:developer';
+
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_guess_game/app/navigation/router.dart';
 import 'package:flutter_guess_game/app/store/app_store.dart';
 import 'package:flutter_guess_game/app/theme/new_theme.dart';
+import 'package:flutter_guess_game/features/home/repo/local_db_services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 
 final ProviderContainer container = ProviderContainer();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // log('Initializing Firebase...');
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
-  // log('Firebase initialized successfully');
+  log('Initializing hive...');
+  await Hive.initFlutter();
+
+  await Hive.openBox<List<List<String>>>("Scores");
+  log('hive initialized successfully');
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
 
   SystemChrome.setPreferredOrientations(
@@ -34,6 +38,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    LocalDBService.instance.getTries();
     BackButtonInterceptor.add(myInterceptor);
   }
 
