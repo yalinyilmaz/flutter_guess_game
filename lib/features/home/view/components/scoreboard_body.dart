@@ -9,6 +9,7 @@ class ScoreboardBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tries = container.read(historyListProvider);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -23,15 +24,24 @@ class ScoreboardBody extends StatelessWidget {
               2: FlexColumnWidth(3),
             },
             children: [
-              _buildTableRow(['Games', 'Scores', 'Tries'], isHeader: true),
-              _buildTableRow([
-                '1st',
-                container.read(historyListProvider).length.toString()
-              ], withListView: true),
-              _buildTableRow(['2nd', "66"], withListView: true),
-              _buildTableRow(['3rd', "24"], withListView: true),
-              _buildTableRow(['4th', "13"], withListView: true),
-              _buildTableRow(['5th', "45"], withListView: true),
+              _buildTableRow(
+                cells: ['Games', 'Scores', 'Tries'],
+                isHeader: true,
+              ),
+              _buildTableRow(
+                  cells: ['1st', tries.length.toString()], tries: tries),
+              _buildTableRow(
+                cells: ['2nd', "66"],tries: tries
+              ),
+              _buildTableRow(
+                cells: ['3rd', "24"],tries: tries
+              ),
+              _buildTableRow(
+                cells: ['4th', "13"],tries: tries
+              ),
+              _buildTableRow(
+                cells: ['5th', "45"],tries: tries
+              ),
             ],
           ),
         ),
@@ -39,8 +49,11 @@ class ScoreboardBody extends StatelessWidget {
     );
   }
 
-  TableRow _buildTableRow(List<String> cells,
-      {bool isHeader = false, bool withListView = false}) {
+  TableRow _buildTableRow({
+    required List<String> cells,
+    List<int>? tries,
+    bool isHeader = false,
+  }) {
     return TableRow(
       children: [
         ...cells.map((cell) => TableCell(
@@ -58,17 +71,15 @@ class ScoreboardBody extends StatelessWidget {
                 ),
               ),
             )),
-        if (withListView)
+        if (tries != null)
           TableCell(
             child: SizedBox(
               height: 60,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: container
-                    .read(historyListProvider)
-                    .length, // Örnek olarak 5 öğe
+                itemCount: tries.length, // Örnek
                 itemBuilder: (context, index) {
-                  final prediction = container.read(historyListProvider)[index];
+                  final prediction = tries[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Container(
